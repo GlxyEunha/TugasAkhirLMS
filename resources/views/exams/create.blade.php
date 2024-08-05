@@ -29,7 +29,7 @@
                         </div>
 
                         <div class="form-group">
-                            <label>TIME (MINUTE)</label>
+                            <label>WAKTU PENGERJAAN</label>
                             <input type="number" name="time" value="{{ old('time') }}" class="form-control" >
 
                             @error('time')
@@ -41,7 +41,7 @@
 
                         <div class="form-group">
                             <label>TOTAL QUESTION</label>
-                            <input type="number" name="total_question" value="{{ old('total_question') }}" class="form-control" >
+                            <input type="number" id="total_question" name="total_question" value="{{ old('total_question') }}" class="form-control" >
 
                             @error('total_question')
                             <div class="invalid-feedback" style="display: block">
@@ -51,7 +51,24 @@
                         </div>
 
                         <div class="form-group">
-                            <label>START</label>
+                            <label>MATA PELAJARAN</label>
+                            <select name="mapel" class="form-control @error('mapel') is-invalid @enderror">
+                                <option value="">Pilih Mata Pelajaran</option>
+                                @foreach($mapel as $m)
+                                <option value="{{ $m->mapel }}">{{ $m->mapel }}</option>
+                                @endforeach
+                                <!-- Tambahkan opsi-opsi mata pelajaran lainnya sesuai kebutuhan -->
+                            </select>
+                    
+                            @error('mapel')
+                            <div class="invalid-feedback" style="display: block">
+                                {{ $message }}
+                            </div>
+                            @enderror
+                        </div>
+
+                        <div class="form-group">
+                            <label>START (UJIAN DIMULAI)</label>
                             <input type="datetime-local" name="start" value="<?= date('Y-m-d', time()); ?>" class="form-control @error('start') is-invalid @enderror">
 
                             @error('start')
@@ -62,7 +79,7 @@
                         </div>
 
                         <div class="form-group">
-                            <label>END</label>
+                            <label>END (UJIAN DITUTUP)</label>
                             <input type="datetime-local" name="end" value="<?= date('Y-m-d', time()); ?>" class="form-control @error('end') is-invalid @enderror">
 
                             @error('end')
@@ -71,6 +88,23 @@
                             </div>
                             @enderror
                         </div>
+
+                        {{-- <div class="form-group">
+                            <label>KELAS</label>
+                            <select name="kelas" class="form-control @error('kelas') is-invalid @enderror">
+                                <option value="">Pilih Kelas</option>
+                                <option value="A">A</option>
+                                <option value="B">B</option>
+                                <option value="C">C</option>
+                                <!-- Tambahkan opsi-opsi mata pelajaran lainnya sesuai kebutuhan -->
+                            </select>
+                    
+                            @error('kelas')
+                            <div class="invalid-feedback" style="display: block">
+                                {{ $message }}
+                            </div>
+                            @enderror
+                        </div> --}}
 
                         <livewire:question-checklist />
 

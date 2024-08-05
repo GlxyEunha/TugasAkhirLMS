@@ -7,6 +7,7 @@ use App\Models\Exam;
 use App\Models\User;
 use App\Models\Audio;
 use App\Models\Image;
+use App\Models\Mapel;
 use App\Models\Video;
 use App\Models\Subject;
 use App\Models\Document;
@@ -41,7 +42,8 @@ class ExamController extends Controller
             })->paginate(10);
         }elseif($currentUser->hasRole('student')){
             $exams = Exam::whereHas('users', function (Builder $query) {
-                $query->where('user_id', Auth()->id());
+                $query->where('user_id', Auth()->id())
+                      ->where('kelas', Auth()->user()->kelas); 
             })->paginate(10);
         }elseif($currentUser->hasRole('teacher')){
             $exams = Exam::where('created_by', Auth()->id())->latest()->when(request()->q, function($exams) {
@@ -61,7 +63,12 @@ class ExamController extends Controller
      */
     public function create()
     {
-        return view('exams.create');
+        // Ambil semua data dari tabel mapel
+        $mapel = Mapel::all();
+
+        // Kirim data ke view
+        return view('exams.create', ['mapel' => $mapel]);
+        // return view('exams.create');
     }
 
     /**
@@ -76,22 +83,34 @@ class ExamController extends Controller
             'name'          => 'required',
             'time'          => 'required',
             'total_question'=> 'required',
+            'mapel'         => 'required',
             'start'         => 'required',
-            'end'           => 'required'
+            'end'           => 'required',
         ]);
-
+    
         $exam = Exam::create([
             'name'          => $request->input('name'),
             'time'          => $request->input('time'),
             'total_question'=> $request->input('total_question'),
+            'mapel'         => $request->input('mapel'),
             'status'        => 'Ready',
             'start'         => $request->input('start'),
             'end'           => $request->input('end'),
             'created_by'    => Auth()->id()
         ]);
-
-        $exam->questions()->sync($request->input('questions'));
-
+    
+        // Ambil pertanyaan yang dikirimkan dengan form
+        $questions = $request->input('questions', []);
+    
+        // Pastikan jumlah pertanyaan sesuai dengan yang telah ditentukan
+        if(count($questions) != $request->input('total_question')) {
+            // Jika jumlah pertanyaan tidak sesuai, kembalikan dengan pesan error
+            return redirect()->back()->withInput()->with(['error' => 'Jumlah pertanyaan tidak sesuai dengan yang telah ditentukan!']);
+        }
+    
+        // Simpan pertanyaan ke dalam database
+        $exam->questions()->sync($questions);
+    
         if($exam){
             //redirect dengan pesan sukses
             return redirect()->route('exams.index')->with(['success' => 'Data Berhasil Disimpan!']);
@@ -110,8 +129,10 @@ class ExamController extends Controller
     public function edit(exam $exam)
     {
         $questions = $exam->questions()->where('exam_id', $exam->id)->get();
+
+        $mapel = Mapel::all();
         
-        return view('exams.edit', compact('exam', 'questions'));
+        return view('exams.edit', compact('exam', 'questions', 'mapel'));
     }
 
     /**
@@ -127,6 +148,7 @@ class ExamController extends Controller
             'name'          => 'required',
             'time'          => 'required',
             'total_question'=> 'required',
+            'mapel'         => 'required',
             'start'         => 'required',
             'end'           => 'required'
         ]);
@@ -135,6 +157,7 @@ class ExamController extends Controller
             'name'          => $request->input('name'),
             'time'          => $request->input('time'),
             'total_question'=> $request->input('total_question'),
+            'mapel'         => $request->input('mapel'),
             'start'         => $request->input('start'),
             'end'           => $request->input('end'),
             'created_by'    => Auth()->id()
@@ -157,10 +180,24 @@ class ExamController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(exam $exam)
+    public function show(Exam $exam)
     {
-        $questions = $exam->questions()->where('exam_id', $exam->id)->get();
+        // Check if the exam is closed
+        if ($exam->end < now()) {
+            return redirect()->back()->with('error', 'Ujian telah ditutup.');
+        }
+
+        // Check if the user has already taken the exam and obtained a score
+        $user = auth()->user();
+        $score = $exam->users()->where('user_id', $user->id)->value('score');
         
+        if ($score !== null && $score > 0) {
+            return redirect()->back()->with('error', 'Anda sudah menyelesaikan ujian dan memperoleh nilai.');
+        }
+
+        // Get the questions for the exam
+        $questions = $exam->questions()->where('exam_id', $exam->id)->get();
+
         return view('exams.show', compact('exam', 'questions'));
     }
 

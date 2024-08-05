@@ -2,13 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use App\Models\Audio;
 use App\Models\Image;
+use App\Models\Mapel;
 use App\Models\Video;
 use App\Models\Subject;
 use App\Models\Document;
 use App\Models\Question;
-use App\Models\User;
 use Illuminate\Http\Request;
 
 class QuestionController extends Controller
@@ -30,9 +31,16 @@ class QuestionController extends Controller
      */
     public function index()
     {
-        $questions = Question::latest()->when(request()->q, function($questions) {
-            $questions = $questions->where('detail', 'like', '%'. request()->q . '%');
-        })->paginate(10);
+        $user = auth()->user();
+
+        $userMapel = $user->mapel;
+
+        $questions = Question::where('mapel', $userMapel)
+        ->latest()
+        ->when(request()->q, function($query) {
+            $query->where('detail', 'like', '%' . request()->q . '%');
+        })
+        ->paginate(10);
 
         $subject = new Subject();
         $video = new Video();
@@ -56,7 +64,8 @@ class QuestionController extends Controller
         $audios = Audio::latest()->get();
         $images = Image::latest()->get();
         $documents = Document::latest()->get();
-        return view('questions.create', compact('subjects', 'videos', 'audios', 'images', 'documents'));
+        $mapel = Mapel::all();
+        return view('questions.create', compact('subjects', 'videos', 'audios', 'images', 'documents', 'mapel'));
     }
 
     /**
@@ -75,7 +84,8 @@ class QuestionController extends Controller
             'option_C'    => 'required',
             'option_D'    => 'required',
             'answer'      => 'required',
-            'explanation' => 'required'
+            'explanation' => 'required',
+            'mapel'       => 'required',
         ]);
 
         $question = Question::create([
@@ -92,6 +102,7 @@ class QuestionController extends Controller
             'document_id'   => $request->input('document_id'),
             'answer'        => $request->input('answer'),
             'explanation'   => $request->input('explanation'),
+            'mapel'         => $request->input('mapel'),
             'created_by'    => Auth()->id()
         ]);
 
@@ -118,7 +129,8 @@ class QuestionController extends Controller
         $audios = Audio::latest()->get();
         $images = Image::latest()->get();
         $documents = Document::latest()->get();
-        return view('questions.edit', compact('question', 'subjects', 'videos', 'audios', 'images', 'documents'));
+        $mapel = Mapel::all();
+        return view('questions.edit', compact('question', 'subjects', 'videos', 'audios', 'images', 'documents', 'mapel'));
     }
 
     /**
@@ -138,7 +150,8 @@ class QuestionController extends Controller
             'option_C'    => 'required',
             'option_D'    => 'required',
             'answer'      => 'required',
-            'explanation' => 'required'
+            'explanation' => 'required',
+            'mapel'       => 'required',
         ]);
 
         $question = Question::findOrFail($question->id);
@@ -157,6 +170,7 @@ class QuestionController extends Controller
             'document_id'   => $request->input('document_id'),
             'answer'        => $request->input('answer'),
             'explanation'   => $request->input('explanation'),
+            'mapel'         => $request->input('mapel'),
             'created_by'    => Auth()->id()
         ]);
 

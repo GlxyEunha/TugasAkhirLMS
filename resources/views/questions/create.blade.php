@@ -19,6 +19,23 @@
                         @csrf
 
                         <div class="form-group">
+                            <label>MATA PELAJARAN</label>
+                            <select name="mapel" class="form-control @error('mapel') is-invalid @enderror">
+                                <option value="">Pilih Mata Pelajaran</option>
+                                @foreach($mapel as $m)
+                                <option value="{{ $m->mapel }}">{{ $m->mapel }}</option>
+                                @endforeach
+                                <!-- Tambahkan opsi-opsi mata pelajaran lainnya sesuai kebutuhan -->
+                            </select>
+                    
+                            @error('mapel')
+                            <div class="invalid-feedback" style="display: block">
+                                {{ $message }}
+                            </div>
+                            @enderror
+                        </div>
+
+                        <div class="form-group">
                             <label>SUBJECT</label>
                             <select class="form-control select-subject @error('subject_id') is-invalid @enderror" name="subject_id">
                                 <option value="">- SELECT SUBJECT -</option>
@@ -105,7 +122,7 @@
 
                         <div class="form-group">
                             <label>DETAIL</label>
-                            <textarea name="detail" cols="30" rows="30" class="form-control">{{ old('detail') }}</textarea>
+                            <textarea name="detail" cols="30" rows="30" class="form-control" style="width: 100%; height: 250px;">{{ old('detail') }}</textarea>
                             @error('detail')
                             <div class="invalid-feedback" style="display: block">
                                 {{ $message }}
@@ -181,7 +198,7 @@
 
                         <div class="form-group">
                             <label>EXPLANATION</label>
-                            <textarea name="explanation" cols="30" rows="30" class="form-control">{{ old('explanation') }}</textarea>
+                            <textarea name="explanation" cols="30" rows="30" class="form-control" style="width: 100%; height: 250px;">{{ old('explanation') }}</textarea>
                             @error('explanation')
                             <div class="invalid-feedback" style="display: block">
                                 {{ $message }}

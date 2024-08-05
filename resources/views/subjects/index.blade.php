@@ -64,7 +64,7 @@
                                     <td>{{ $subject->name }}</td>
                                     <td class="text-center">
                                         @can('subjects.delete')
-                                            <button onClick="Delete(this.id)" class="btn btn-sm btn-danger" id="{{ $subject->id }}">
+                                            <button onClick="Delete(this.id)" class="btn btn-sm btn-danger" id="{{ $subject->id }}" title="Hapus Subjek">
                                                 <i class="fa fa-trash"></i>
                                             </button>
                                         @endcan

@@ -42,6 +42,7 @@
                                 <th scope="col">NAME</th>
                                 <th scope="col">TIME</th>
                                 <th scope="col">TOTAL QUESTION</th>
+                                <th scope="col">MATA PELAJARAN</th>
                                 @hasanyrole('teacher|admin')
                                 <th scope="col">ASSIGN STUDENT</th>
                                 @endhasanyrole
@@ -60,6 +61,7 @@
                                     <td>{{ $exam->name }}</td>
                                     <td>{{ $exam->time }}</td>
                                     <td>{{ $exam->questions->count() }}</td>
+                                    <td>{{ $exam->mapel}}</td>
                                     @hasanyrole('teacher|admin')
                                     <td>{{ $exam->users->count() }}</td>
                                     @endhasanyrole
@@ -69,23 +71,23 @@
                                     <td>{{ TanggalID($exam->start) }}</td>
                                     <td>{{ TanggalID($exam->end) }}</td>
                                     <td class="text-center">
-                                        <a href="{{ route('exams.show', $exam->id) }}" class="btn btn-sm btn-info">
+                                        <a href="{{ route('exams.show', $exam->id) }}" class="btn btn-sm btn-info" title="Lihat Ujian">
                                             <i class="fa fa-eye"></i>
                                         </a>
                                         @can('exams.edit')
-                                            <a href="{{ route('exams.edit', $exam->id) }}" class="btn btn-sm btn-primary">
+                                            <a href="{{ route('exams.edit', $exam->id) }}" class="btn btn-sm btn-primary" title="Edit Ujian">
                                                 <i class="fa fa-pencil-alt"></i>
                                             </a>
                                         @endcan
                                         
                                         @hasanyrole('teacher|admin')
-                                        <a href="{{ route('exams.student', $exam->id) }}" class="btn btn-sm btn-primary">
+                                        <a href="{{ route('exams.student', $exam->id) }}" class="btn btn-sm btn-primary" title="Tambah Siswa">
                                             <i class="fa fa-door-open"></i>
                                         </a>
                                         @endhasanyrole
                                         
                                         @can('exams.delete')
-                                            <button onClick="Delete(this.id)" class="btn btn-sm btn-danger" id="{{ $exam->id }}">
+                                            <button onClick="Delete(this.id)" class="btn btn-sm btn-danger" id="{{ $exam->id }}" title="Hapus Ujian">
                                                 <i class="fa fa-trash"></i>
                                             </button>
                                         @endcan

@@ -95,7 +95,7 @@
                                     <td>{{ $audio->caption }}</td>
                                     <td class="text-center">
                                         @can('audios.delete')
-                                            <button onClick="Delete(this.id)" class="btn btn-sm btn-danger" id="{{ $audio->id }}">
+                                            <button onClick="Delete(this.id)" class="btn btn-sm btn-danger" id="{{ $audio->id }}" title="Hapus Audio">
                                                 <i class="fa fa-trash"></i>
                                             </button>
                                         @endcan

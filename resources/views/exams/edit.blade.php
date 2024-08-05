@@ -51,6 +51,25 @@
                         </div>
 
                         <div class="form-group">
+                            <label>MATA PELAJARAN</label>
+                            <select name="mapel" class="form-control @error('mapel') is-invalid @enderror">
+                                <option value="">Pilih Mata Pelajaran</option>
+                                @foreach($mapel as $m)
+                                    <option value="{{ $m->mapel }}" {{ (old('mapel', $exam->mapel) == $m->mapel) ? 'selected' : '' }}>
+                                        {{ $m->mapel }}
+                                    </option>
+                                @endforeach
+                                <!-- Tambahkan opsi-opsi mata pelajaran lainnya sesuai kebutuhan -->
+                            </select>
+                    
+                            @error('mapel')
+                            <div class="invalid-feedback" style="display: block">
+                                {{ $message }}
+                            </div>
+                            @enderror
+                        </div>
+
+                        <div class="form-group">
                             <label>START</label>
                             <input type="datetime-local" name="start" value="<?php echo date('Y-m-d\TH:i:s', strtotime($exam->start)); ?>" class="form-control @error('start') is-invalid @enderror">
 

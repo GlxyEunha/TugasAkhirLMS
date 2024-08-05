@@ -23,4 +23,10 @@ class Question extends Model
     public function exams(){
         return $this->belongsToMany(Exam::class)->withTimestamps();
     }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'mapel', 'mapel');
+    }
+
 }

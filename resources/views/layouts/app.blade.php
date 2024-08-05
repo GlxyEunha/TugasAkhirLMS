@@ -60,7 +60,7 @@
             <div class="main-sidebar sidebar-style-2">
                 <aside id="sidebar-wrapper">
                     <div class="sidebar-brand">
-                        <a href="index.html">UJIAN APP</a>
+                        <a href="{{ route('dashboard.index') }}">E-LEARNING APP</a>
                     </div>
                     <div class="sidebar-brand sidebar-brand-sm">
                         <a href="index.html">UJIAN</a>
@@ -94,6 +94,30 @@
                                 <span>Agenda</span></a></li>
                         @endcan
 
+                        @can('materis.index')
+                        <li class="{{ setActive('/materi') }}"><a class="nav-link"
+                                href="{{ route('materis.index') }}"><i class="fas fa-book"></i>
+                                <span>Materi</span></a></li>
+                        @endcan
+
+                        @can('materisiswa.index')
+                        <li class="{{ setActive('/materisiswa') }}"><a class="nav-link"
+                                href="{{ route('materis.siswa') }}"><i class="fas fa-book"></i>
+                                <span>Materi Siswa</span></a></li>
+                        @endcan
+
+                        @can('homeworks.index')
+                        <li class="{{ setActive('/homework') }}"><a class="nav-link"
+                                href="{{ route('homework.index') }}"><i class="fas fa-tasks"></i>
+                                <span>Tugas</span></a></li>
+                        @endcan
+
+                        @can('cekmateris.index')
+                        <li class="{{ setActive('/cekmateri') }}"><a class="nav-link"
+                                href="{{ route('cekmateris.index') }}"><i class="fas fa-book"></i>
+                                <span>Cek Materi</span></a></li>
+                        @endcan
+
                         @if(auth()->user()->can('images.index') || auth()->user()->can('videos.index') || auth()->user()->can('audios.index') || auth()->user()->can('documents.index'))
                         <li class="menu-header">GALERI</li>
                         @endif
@@ -121,6 +145,16 @@
                                 href="{{ route('documents.index') }}"><i class="fas fa-file-word"></i>
                                 <span>Document</span></a></li>
                         @endcan
+
+                        {{-- @if(auth()->user()->can('materi.index'))
+                        <li class="menu-header">MATERI</li>
+                        @endif
+
+                        @can('materi.index')
+                        <li class="{{ setActive('/materi') }}"><a class="nav-link"
+                                href="{{ route('materis.index') }}"><i class="fas fa-file-word"></i>
+                                <span>Materi</span></a></li>
+                        @endcan --}}
 
                         @if(auth()->user()->can('roles.index') || auth()->user()->can('permission.index') || auth()->user()->can('users.index'))
                         <li class="menu-header">PENGATURAN</li>
@@ -157,6 +191,12 @@
                                         href="{{ route('users.index') }}"><i class="fas fa-users"></i> Users</a>
                                 </li>
                                 @endcan
+
+                                @can('mapel.index')
+                                    <li class="{{ setActive('/mapel') }}"><a class="nav-link"
+                                        href="{{ route('mapel.index') }}"><i class="fas fa-book"></i> Mata Pelajaran</a>
+                                </li>
+                                @endcan
                             </ul>
                         </li>
                     </ul>
@@ -168,7 +208,7 @@
 
             <footer class="main-footer">
                 <div class="footer-left">
-                    Copyright &copy; 2021 <div class="bullet"></div> UJIAN APP <div class="bullet"></div> All Rights
+                    Copyright &copy; 2024 <div class="bullet"></div> E-LEARNING APP <div class="bullet"></div> All Rights
                     Reserved.
                 </div>
                 <div class="footer-right">

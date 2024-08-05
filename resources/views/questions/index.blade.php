@@ -37,6 +37,7 @@
                             <thead>
                             <tr>
                                 <th scope="col" style="text-align: center;width: 6%">NO.</th>
+                                <th scope="col">MATA PELAJARAN</th>
                                 <th scope="col">SUBJECT</th>
                                 <th scope="col">DETAIL</th>
                                 <th scope="col">ATTACHMENT</th>
@@ -55,6 +56,7 @@
                             @foreach ($questions as $no => $question)
                                 <tr>
                                     <th scope="row" style="text-align: center">{{ ++$no + ($questions->currentPage()-1) * $questions->perPage() }}</th>
+                                    <td>{{ $question->mapel }}</td>
                                     <td>{{ $subject->getName($question->subject_id) }}</td>
                                     <td>{{ $question->detail }}</td>
                                     <td>
@@ -80,13 +82,13 @@
                                     <td>{{ $user->getName($question->created_by) }}</td>
                                     <td class="text-center">
                                         @can('questions.edit')
-                                            <a href="{{ route('questions.edit', $question->id) }}" class="btn btn-sm btn-primary">
+                                            <a href="{{ route('questions.edit', $question->id) }}" class="btn btn-sm btn-primary" title="Edit Pertanyaan">
                                                 <i class="fa fa-pencil-alt"></i>
                                             </a>
                                         @endcan
                                         
                                         @can('questions.delete')
-                                            <button onClick="Delete(this.id)" class="btn btn-sm btn-danger" id="{{ $question->id }}">
+                                            <button onClick="Delete(this.id)" class="btn btn-sm btn-danger" id="{{ $question->id }}" title="Hapus Pertanyaan">
                                                 <i class="fa fa-trash"></i>
                                             </button>
                                         @endcan

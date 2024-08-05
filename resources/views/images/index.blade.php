@@ -90,7 +90,7 @@
                                     <td>{{ $image->caption }}</td>
                                     <td class="text-center">
                                         @can('images.delete')
-                                            <button onClick="Delete(this.id)" class="btn btn-sm btn-danger" id="{{ $image->id }}">
+                                            <button onClick="Delete(this.id)" class="btn btn-sm btn-danger" id="{{ $image->id }}" title="Hapus Gambar">
                                                 <i class="fa fa-trash"></i>
                                             </button>
                                         @endcan

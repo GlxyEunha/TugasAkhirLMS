@@ -56,13 +56,13 @@
                                     </td>
                                     <td class="text-center">
                                         @can('users.edit')
-                                            <a href="{{ route('users.edit', $user->id) }}" class="btn btn-sm btn-primary">
+                                            <a href="{{ route('users.edit', $user->id) }}" class="btn btn-sm btn-primary" title="Edit User">
                                                 <i class="fa fa-pencil-alt"></i>
                                             </a>
                                         @endcan
                                         
                                         @can('users.delete')
-                                            <button onClick="Delete(this.id)" class="btn btn-sm btn-danger" id="{{ $user->id }}">
+                                            <button onClick="Delete(this.id)" class="btn btn-sm btn-danger" id="{{ $user->id }}" title="Hapus User">
                                                 <i class="fa fa-trash"></i>
                                             </button>
                                         @endcan

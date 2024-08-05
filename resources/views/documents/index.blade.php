@@ -92,7 +92,7 @@
                                     <td>{{ $document->caption }}</td>
                                     <td class="text-center">
                                         @can('documents.delete')
-                                            <button onClick="Delete(this.id)" class="btn btn-sm btn-danger" id="{{ $document->id }}">
+                                            <button onClick="Delete(this.id)" class="btn btn-sm btn-danger" id="{{ $document->id }}" title="Hapus Dokumen">
                                                 <i class="fa fa-trash"></i>
                                             </button>
                                         @endcan

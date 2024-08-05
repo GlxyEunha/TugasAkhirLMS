@@ -66,18 +66,57 @@
                         </div>
 
                         <div class="form-group">
-                            <label class="font-weight-bold">ROLE</label>
+                            <label>ROLE</label>
+                            <select id="role" name="role" class="form-control @error('role') is-invalid @enderror">
+                                <option value="">Pilih Role</option>
+                                <option value="admin">Admin</option>
+                                <option value="teacher">Teacher</option>
+                                <option value="kurikulum">Kurikulum</option>
+                                <option value="student">Student</option>
+                                <!-- Tambahkan opsi-opsi mata pelajaran lainnya sesuai kebutuhan -->
+                            </select>
                             
-                            @foreach ($roles as $role)
-                            <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="checkbox" name="role[]" value="{{ $role->name }}" id="check-{{ $role->id }}">
-                                <label class="form-check-label" for="check-{{ $role->id }}">
-                                    {{ $role->name }}
-                                </label>
+                            @error('role')
+                            <div class="invalid-feedback" style="display: block">
+                                {{ $message }}
                             </div>
-                            @endforeach
+                            @enderror
+                        </div>
+                        
+                        <div class="form-group">
+                            <label>KELAS</label>
+                            <select id="kelas" name="kelas" class="form-control @error('kelas') is-invalid @enderror">
+                                <option value="">Pilih Kelas</option>
+                                <option value="A">A</option>
+                                <option value="B">B</option>
+                                <option value="C">C</option>
+                                <!-- Tambahkan opsi-opsi mata pelajaran lainnya sesuai kebutuhan -->
+                            </select>
+                            
+                            @error('kelas')
+                            <div class="invalid-feedback" style="display: block">
+                                {{ $message }}
+                            </div>
+                            @enderror
                         </div>
 
+                        <div class="form-group">
+                            <label>MATA PELAJARAN</label>
+                            <select name="mapel" class="form-control @error('mapel') is-invalid @enderror">
+                                <option value="">Pilih Mata Pelajaran</option>
+                                @foreach($mapel as $m)
+                                <option value="{{ $m->mapel }}">{{ $m->mapel }}</option>
+                                @endforeach
+                                <!-- Tambahkan opsi-opsi mata pelajaran lainnya sesuai kebutuhan -->
+                            </select>
+                    
+                            @error('mapel')
+                            <div class="invalid-feedback" style="display: block">
+                                {{ $message }}
+                            </div>
+                            @enderror
+                        </div>
+                        
                         <button class="btn btn-primary mr-1 btn-submit" type="submit"><i class="fa fa-paper-plane"></i>
                             SIMPAN</button>
                         <button class="btn btn-warning btn-reset" type="reset"><i class="fa fa-redo"></i> RESET</button>
@@ -88,4 +127,5 @@
         </div>
     </section>
 </div>
+
 @stop

@@ -64,7 +64,7 @@
                             </div>
                         </div>
 
-                        <div class="form-group">
+                        {{-- <div class="form-group">
                             <label class="font-weight-bold">ROLE</label>
                            
                             @foreach ($roles as $role)
@@ -76,6 +76,60 @@
                                     </label>
                                 </div>
                             @endforeach
+                        </div> --}}
+
+                        <div class="form-group">
+                            <label>ROLE</label>
+                            <select id="role" name="role" class="form-control @error('role') is-invalid @enderror">
+                                <option value="">Pilih Role</option>
+                                <option value="admin" {{ old('role', $user->roles->first()->name) == 'admin' ? 'selected' : '' }}>Admin</option>
+                                <option value="teacher" {{ old('role', $user->roles->first()->name) == 'teacher' ? 'selected' : '' }}>Teacher</option>
+                                <option value="kurikulum" {{ old('role', $user->roles->first()->name) == 'kurikulum' ? 'selected' : '' }}>Kurikulum</option>
+                                <option value="student" {{ old('role', $user->roles->first()->name) == 'student' ? 'selected' : '' }}>Student</option>
+                                <!-- Tambahkan opsi-opsi role lainnya sesuai kebutuhan -->
+                            </select>
+                            
+                            @error('role')
+                            <div class="invalid-feedback" style="display: block">
+                                {{ $message }}
+                            </div>
+                            @enderror
+                        </div>
+                        
+                        <div class="form-group">
+                            <label>KELAS</label>
+                            <select id="kelas" name="kelas" class="form-control @error('kelas') is-invalid @enderror">
+                                <option value="">Pilih Kelas</option>
+                                <option value="A" {{ old('kelas', $user->kelas) == 'A' ? 'selected' : '' }}>A</option>
+                                <option value="B" {{ old('kelas', $user->kelas) == 'B' ? 'selected' : '' }}>B</option>
+                                <option value="C" {{ old('kelas', $user->kelas) == 'C' ? 'selected' : '' }}>C</option>
+                                <!-- Tambahkan opsi-opsi kelas lainnya sesuai kebutuhan -->
+                            </select>
+                            
+                            @error('kelas')
+                            <div class="invalid-feedback" style="display: block">
+                                {{ $message }}
+                            </div>
+                            @enderror
+                        </div>
+
+                        <div class="form-group">
+                            <label>MATA PELAJARAN</label>
+                            <select name="mapel" class="form-control @error('mapel') is-invalid @enderror">
+                                <option value="">Pilih Mata Pelajaran</option>
+                                @foreach($mapel as $m)
+                                    <option value="{{ $m->mapel }}" {{ (old('mapel', $user->mapel) == $m->mapel) ? 'selected' : '' }}>
+                                        {{ $m->mapel }}
+                                    </option>
+                                @endforeach
+                                <!-- Tambahkan opsi-opsi mata pelajaran lainnya sesuai kebutuhan -->
+                            </select>
+                    
+                            @error('mapel')
+                            <div class="invalid-feedback" style="display: block">
+                                {{ $message }}
+                            </div>
+                            @enderror
                         </div>
 
                         <button class="btn btn-primary mr-1 btn-submit" type="submit"><i class="fa fa-paper-plane"></i>

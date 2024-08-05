@@ -42,6 +42,16 @@
                           <input type="text" class="form-control" name="q" wire:model="q"
                                  placeholder="cari berdasarkan detail student">
                       </div>
+                      <div class="form-group">
+                        <label for="classFilter">Filter by Class:</label>
+                        <select wire:model="selectedClass" class="form-control" id="classFilter">
+                            <option value="">All Classes</option>
+                            <option value="A">Class A</option>
+                            <option value="B">Class B</option>
+                            <option value="C">Class C</option>
+                        </select>
+                      </div>
+              
             <table id="table_id" class="table table-bordered table-hover">
               <thead>
               <tr>

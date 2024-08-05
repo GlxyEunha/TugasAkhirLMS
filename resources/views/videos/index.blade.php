@@ -95,7 +95,7 @@
                                     <td>{{ $video->caption }}</td>
                                     <td class="text-center">
                                         @can('videos.delete')
-                                            <button onClick="Delete(this.id)" class="btn btn-sm btn-danger" id="{{ $video->id }}">
+                                            <button onClick="Delete(this.id)" class="btn btn-sm btn-danger" id="{{ $video->id }}" title="Hapus Video">
                                                 <i class="fa fa-trash"></i>
                                             </button>
                                         @endcan
