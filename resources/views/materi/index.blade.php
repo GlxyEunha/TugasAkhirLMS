@@ -1,6 +1,12 @@
 @extends('layouts.app')
 
 @section('content')
+<style>
+    .disabled {
+        pointer-events: none;
+        opacity: 0.5;
+    }
+</style>
 <div class="main-content">
     <section class="section">
         <div class="section-header">
@@ -146,11 +152,15 @@
                             </tr>
                             </thead>
                             <tbody>
-                            @foreach ($materisMatematika as $no => $materi)
+                                @foreach ($materisMatematika as $no => $materi)
                                 <tr>
                                     <th scope="row" style="text-align: center">{{ ++$no + ($materisMatematika->currentPage()-1) * $materisMatematika->perPage() }}</th>
                                     <td>
-                                        <a href="{{ Storage::url('public/documents/'.$materi->link) }}" download> <i class="fas fa-file-download"></i> Download
+                                        <a href="{{ $materi->completed == 1 ? Storage::url('public/documents/'.$materi->link) : '#' }}" 
+                                           download 
+                                           class="{{ $materi->completed == 0 ? 'disabled' : '' }}">
+                                           <i class="fas fa-file-download"></i> Download
+                                        </a>
                                     </td>
                                     <td>{{ $materi->title }}</td>
                                     <td>{{ $materi->caption }}</td>
@@ -162,7 +172,7 @@
                                         @endcan
                                     </td>
                                 </tr>
-                            @endforeach
+                                @endforeach
                             </tbody>
                         </table>
                         <div style="text-align: center">
@@ -195,7 +205,11 @@
                                 <tr>
                                     <th scope="row" style="text-align: center">{{ ++$no + ($materisBahasa->currentPage()-1) * $materisBahasa->perPage() }}</th>
                                     <td>
-                                        <a href="{{ Storage::url('public/documents/'.$materi->link) }}" download> <i class="fas fa-file-download"></i> Download
+                                        <a href="{{ $materi->completed == 1 ? Storage::url('public/documents/'.$materi->link) : '#' }}" 
+                                           download 
+                                           class="{{ $materi->completed == 0 ? 'disabled' : '' }}">
+                                           <i class="fas fa-file-download"></i> Download
+                                        </a>
                                     </td>
                                     <td>{{ $materi->title }}</td>
                                     <td>{{ $materi->caption }}</td>
@@ -239,7 +253,11 @@
                                 <tr>
                                     <th scope="row" style="text-align: center">{{ ++$no + ($materisIPA->currentPage()-1) * $materisIPA->perPage() }}</th>
                                     <td>
-                                        <a href="{{ Storage::url('public/documents/'.$materi->link) }}" download> <i class="fas fa-file-download"></i> Download
+                                        <a href="{{ $materi->completed == 1 ? Storage::url('public/documents/'.$materi->link) : '#' }}" 
+                                           download 
+                                           class="{{ $materi->completed == 0 ? 'disabled' : '' }}">
+                                           <i class="fas fa-file-download"></i> Download
+                                        </a>
                                     </td>
                                     <td>{{ $materi->title }}</td>
                                     <td>{{ $materi->caption }}</td>

@@ -29,6 +29,7 @@
                                 <th scope="col" style="text-align: center;width: 6%">NO.</th>
                                 <th scope="col">NAMA SISWA</th>
                                 <th scope="col">DOCUMENT</th>
+                                <th scope="col">STATUS</th>
                                 <th scope="col">NILAI</th>
                                 <th scope="col">AKSI</th>
                                 {{-- <th scope="col">TITLE</th>
@@ -54,6 +55,7 @@
                                             </a>
                                         @endif
                                     </td>
+                                    <td>{{ $file->nilai }}</td>
                                     <td>
                                         <a href="{{ route('homework.isinilai', $file->id) }}" class="btn btn-sm btn-primary" title="Beri Nilai">
                                             <i class="fa fa-pencil-alt"></i>

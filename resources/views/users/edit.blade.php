@@ -132,6 +132,18 @@
                             @enderror
                         </div>
 
+                        <div class="form-group">
+                            <label>PERIODE</label>
+                            <input type="text" name="periode" value="{{ old('periode', \Carbon\Carbon::parse($user->created_at)->format('Y')) }}"
+                                   class="form-control @error('periode') is-invalid @enderror" disabled>
+                        
+                            @error('periode')
+                            <div class="invalid-feedback" style="display: block">
+                                {{ $message }}
+                            </div>
+                            @enderror
+                        </div>
+
                         <button class="btn btn-primary mr-1 btn-submit" type="submit"><i class="fa fa-paper-plane"></i>
                             UPDATE</button>
                         <button class="btn btn-warning btn-reset" type="reset"><i class="fa fa-redo"></i> RESET</button>
